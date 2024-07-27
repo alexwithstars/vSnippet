@@ -35,7 +35,7 @@ export default function App () {
     <>
       <header className='header'>
         <h1 className='header-title'>vSnippet</h1>
-        <Bars3Icon className='header-icon' />
+        <Bars3Icon className='header-icon' onClick={() => addToast(messages.development)} />
       </header>
       <main className='main-content'>
         <section className='short-inputs'>
@@ -73,11 +73,7 @@ export default function App () {
           text='Save'
           Icon={BookmarkIcon}
           onClick={() => {
-            addToast({
-              title: 'Still in development',
-              message: 'Sorry, this feature is still in development, stay tuned!',
-              type: 'info'
-            })
+            addToast(messages.development)
           }}
         />
         <PrimaryButton

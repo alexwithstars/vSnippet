@@ -23,5 +23,10 @@ export const messages = {
     title: 'Error',
     message: 'Something went wrong, try again',
     type: 'error'
+  },
+  development: {
+    title: 'Still in development',
+    message: 'Sorry, this feature is still in development, stay tuned!',
+    type: 'info'
   }
 }
