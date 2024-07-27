@@ -35,7 +35,7 @@ export default function App () {
     <>
       <header className='header'>
         <h1 className='header-title'>vSnippet</h1>
-        <Bars3Icon className='header-icon' />
+        <Bars3Icon className='header-icon' onClick={() => addToast(messages.development)} />
       </header>
       <main className='main-content'>
         <section className='short-inputs'>
