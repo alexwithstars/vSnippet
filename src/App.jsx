@@ -73,11 +73,7 @@ export default function App () {
           text='Save'
           Icon={BookmarkIcon}
           onClick={() => {
-            addToast({
-              title: 'Still in development',
-              message: 'Sorry, this feature is still in development, stay tuned!',
-              type: 'info'
-            })
+            addToast(messages.development)
           }}
         />
         <PrimaryButton
