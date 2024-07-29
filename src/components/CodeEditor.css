@@ -28,9 +28,3 @@
 		color: var(--gray600);
 	}
 }
-
-@media (max-width: 500px) {
-	.code-editor-container {
-		min-width: 0;
-	}
-}

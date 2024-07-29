@@ -43,7 +43,7 @@
 		align-items: stretch;
 		flex-grow: 1;
 		& > * {
-			min-width: var(--sz384);
+			min-width: min(var(--sz384), 100%);
 			min-height: var(--sz256);
 		}
 	}
