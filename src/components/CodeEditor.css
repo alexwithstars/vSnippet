@@ -4,8 +4,6 @@
 	border-radius: var(--sz4);
 	background:linear-gradient(#0004, #0004),var(--gray800);
 	flex-grow: 1;
-	min-height: var(--sz256);
-	min-width: var(--sz384);
 }
 .code-editor_label {
 	padding: var(--sz8) var(--sz12);
