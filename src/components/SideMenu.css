@@ -4,13 +4,13 @@
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background-color: #0005;
-	z-index: 10;
+	background-color: #fff1;
+	z-index: 1;
 	padding: var(--sz16);
 	display: flex;
 	justify-content: end;
-	display: none;
 	.side-menu {
+		width: min(var(--sz640), 90%);
 		height: 100%;
 		background-color: var(--gray900);
 		box-shadow: var(--shadow2);
@@ -18,7 +18,7 @@
 		border-radius: var(--sz4);
 		display: flex;
 		flex-direction: column;
-		gap: var(--sz32);
+		gap: var(--sz8);
 		& > .side-menu_top {
 			display: flex;
 			justify-content: flex-end;
@@ -34,9 +34,96 @@
 			flex-direction: column;
 			flex-grow: 1;
 			overflow: auto;
-			&::-webkit-scrollbar {
-				width: 2px;
+			padding: 0 var(--sz16);
+			gap: var(--sz48);
+			& > h3 {
+				font-size: var(--fs18);
+				color: var(--primary200);
+				margin-bottom: calc(0px - var(--sz32));
+			}
+			& > .side-menu_settings {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(var(--sz256), 1fr));
+				gap: var(--sz16) var(--sz24);
+			}
+			& > .side-menu_snippets {
+				display: flex;
+				flex-direction: column;
+				gap: var(--sz16);
+				& > .side-menu_noSnippets {
+					width: 100%;
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					justify-content: center;
+					padding: var(--sz16);
+					gap: var(--sz16);
+					& > .side-menu_noSnippets_text {
+						font-size: var(--fs18);
+						color: var(--gray500);
+					}
+				}
 			}
 		}
+	}
+}
+
+.side-menu_fadeIn {
+	animation: show 0.3s forwards;
+	& > .side-menu {
+		animation: fadeIn 0.3s forwards;
+	}
+}
+.side-menu_fadeOut {
+	animation: hide 0.3s forwards;
+	& > .side-menu {
+		animation: fadeOut 0.3s forwards;
+	}
+}
+
+@keyframes show {
+	0% {
+		opacity: 0;
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+@keyframes hide {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+@keyframes fadeIn {
+	0% {
+		translate: 100%;
+	}
+	50% {
+		translate: -10px;
+	}
+	100% {
+		translate: 0;
+	}
+}
+
+@keyframes fadeOut {
+	0% {
+		translate: 0;
+	}
+	50% {
+		translate: -10px;
+	}
+	100% {
+		translate: 100%;
 	}
 }
