@@ -6,7 +6,7 @@
 	border-radius: var(--sz4);
 	border-width: 2px;
 	border-style: solid;
-	box-shadow: var(--shadow1);
+	box-shadow: var(--shadow3);
 	gap: var(--sz12);
 	margin-bottom: var(--sz12);
 	max-height: 100px;
@@ -46,6 +46,9 @@
 		width: 100%;
 		height: 2px;
 		animation: progress var(--duration) linear forwards;
+	}
+	&:hover > .toast-progressbar {
+		animation-play-state: paused;
 	}
 }
 
@@ -155,7 +158,7 @@
 
 .toast_fadeIn {
 	opacity: 0;
-	animation: appear 1s forwards;
+	animation: appear 0.4s forwards;
 }
 
 @keyframes disappear {
@@ -169,12 +172,12 @@
 		margin-bottom: var(--sz12);
 	}
 	20% {
-		translate: -10px;
+		translate: 10px;
 		opacity: 1;
 	}
 	50% {
 		opacity: 0;
-		translate: 100%;
+		translate: -100%;
 		margin-bottom: var(--sz12);
 		height: var(--height);
 		border-width: 2px;
@@ -182,7 +185,7 @@
 	}
 	/* last height to 0 */
 	100% {
-		translate: 100%;
+		translate: -100%;
 		opacity: 0;
 		height: 0;
 		padding: 0;
@@ -193,15 +196,11 @@
 
 @keyframes appear {
 	0% {
-		translate: 100%;
+		translate: -100%;
 		opacity: 0;
 	}
-	20% {
-		translate: -10px;
-		opacity: 1;
-	}
-	40% {
-		translate: 0;
+	50% {
+		translate: 10px;
 		opacity: 1;
 	}
 	100% {
