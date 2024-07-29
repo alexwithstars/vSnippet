@@ -1,5 +1,5 @@
 import './Toast.css'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import {
   ExclamationCircleIcon,
   ExclamationTriangleIcon,
@@ -9,43 +9,50 @@ import {
 } from '@heroicons/react/24/outline'
 
 export function Toast ({ id, title, message, type = 'info', duration, removeToast }) {
+  const toast = useRef(null)
+  const timer = useRef(null)
+  const started = useRef(performance.now())
+  const remaining = useRef(duration)
   const fadeOut = () => {
-    const toast = document.getElementById(id)
-    toast.style.setProperty('--height', toast.offsetHeight + 'px')
-    toast.classList.add('toast_fadeOut')
-    toast.addEventListener('animationend', () => {
+    toast.current.style.setProperty('--height', toast.current.offsetHeight + 'px')
+    toast.current.classList.add('toast_fadeOut')
+    toast.current.addEventListener('animationend', () => {
       removeToast(id)
     })
   }
   const fadeIn = () => {
-    const toast = document.getElementById(id)
-    toast.style.setProperty('--duration', (duration - 50) + 'ms')
-    toast.addEventListener('animationend', () => {
-      toast.classList.remove('toast_fadeIn')
+    toast.current.style.setProperty('--duration', (duration - 50) + 'ms')
+    toast.current.addEventListener('animationend', () => {
+      toast.current.classList.remove('toast_fadeIn')
     })
   }
+
+  useEffect(() => fadeIn(), [])
   useEffect(() => {
-    fadeIn()
-  }, [])
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      fadeOut()
-    }, duration)
-    return () => {
-      clearTimeout(timer)
-    }
+    timer.current = setTimeout(() => fadeOut(), duration)
+    return () => clearTimeout(timer.current)
   }, [duration])
+
+  const toastMap = {
+    error: () => <ExclamationCircleIcon className='toast-icon' />,
+    warning: () => <ExclamationTriangleIcon className='toast-icon' />,
+    success: () => <CheckCircleIcon className='toast-icon' />
+  }
+
   return (
-    <div className={`toast toast_default toast_${type} toast_fadeIn`} id={id}>
-      {
-        type === 'error'
-          ? <ExclamationCircleIcon className='toast-icon' />
-          : type === 'warning'
-            ? <ExclamationTriangleIcon className='toast-icon' />
-            : type === 'success'
-              ? <CheckCircleIcon className='toast-icon' />
-              : <InformationCircleIcon className='toast-icon' />
-      }
+    <div
+      className={`toast toast_default toast_${type} toast_fadeIn`}
+      ref={toast}
+      onMouseEnter={() => {
+        clearTimeout(timer.current)
+        remaining.current -= (performance.now() - started.current)
+      }}
+      onMouseLeave={() => {
+        started.current = performance.now()
+        timer.current = setTimeout(() => fadeOut(), remaining.current)
+      }}
+    >
+      {type in toastMap ? toastMap[type]() : <InformationCircleIcon className='toast-icon' />}
       <div className='toast-content'>
         <span className='toast-title'>{title}</span>
         <span className='toast-message'>{message}</span>
