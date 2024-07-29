@@ -1,12 +1,12 @@
 {
 	"rewrites": [
 		{
-			"source": "/(.*)",
-			"destination": "/index.html"
-		},
-		{
 			"source": "/colors",
 			"destination": "/colors.html"
+		},
+		{
+			"source": "/(.*)",
+			"destination": "/index.html"
 		}
 	]
 }
