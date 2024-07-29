@@ -1,0 +1,99 @@
+.setting {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+	align-items: center;
+	gap: var(--sz16);
+	& > .setting_label {
+		display: flex;
+		flex-direction: column;
+		min-width: var(--sz64);
+		gap: var(--sz4);
+		& > .setting_name {
+			font-size: var(--fs16);
+			color: var(--gray100);
+			font-weight: bold;
+		}
+		& > .setting_description {
+			font-size: var(--fs14);
+			color: var(--gray300);
+		}
+	}
+	& > .toggle-setting_container {
+		height: var(--sz24);
+		box-sizing: content-box;
+		width: var(--sz48);
+		cursor: pointer;
+		flex-shrink: 0;
+		background-color: transparent;
+		border: 2px solid var(--gray600);
+		background-color: var(--gray600);
+		gap: 2px;
+		border-radius: var(--sz4);
+		position: relative;
+		transition: background-color 0.2s, border-color 0.2s;
+		& > .toggle-setting_indicator {
+			height: 100%;
+			aspect-ratio: 1;
+			border-radius: 2px;
+			background-color: var(--gray200);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			position: relative;
+			left: 0;
+			box-shadow: var(--shadow1);
+			transition: left 0.2s;
+			&::before {
+				content: '';
+				position: absolute;
+				width: 2px;
+				height: var(--sz12);
+				background-color: var(--gray400);
+			}
+		}
+		&.active {
+			border-color: var(--primary500);
+			background-color: var(--primary500);
+			& > .toggle-setting_indicator {
+				left: 50%;
+			}
+		}
+	}
+	& > .number-setting_container {
+		width: var(--sz96);
+		height: var(--sz32);
+		display: flex;
+		align-items: center;
+		border: 2px solid var(--primary600);
+		background-color: var(--primary900);
+		border-radius: var(--sz4);
+		& > .number-setting_input::-webkit-outer-spin-button,
+		& > .number-setting_input::-webkit-inner-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+		}
+		& > .number-setting_input {
+			border: none;
+			outline: none;
+			width: 0;
+			height: 100%;
+			background-color: transparent;
+			flex-grow: 1;
+			color: var(--gray200);
+			font-size: var(--fs18);
+			padding: 0 var(--sz4);
+		}
+		& > .number-setting_unit {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100%;
+			aspect-ratio: 1;
+			background-color: var(--primary600);
+			color: var(--gray100);
+			text-transform: uppercase;
+			font-size: var(--fs14);
+		}
+	}
+}
