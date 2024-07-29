@@ -42,13 +42,17 @@
 		gap: var(--sz24);
 		align-items: stretch;
 		flex-grow: 1;
+		& > * {
+			min-width: var(--sz384);
+			min-height: var(--sz256);
+		}
 	}
 }
 
 .actions {
 	position: fixed;
-	bottom: var(--sz48);
-	right: var(--sz48);
+	bottom: var(--sz24);
+	right: var(--sz24);
 	z-index: 1;
 	display: flex;
 	align-items: end;
