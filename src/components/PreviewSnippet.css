@@ -1,0 +1,37 @@
+.snippet-preview {
+	display: flex;
+	flex-direction: column;
+	border-radius: var(--sz4);
+	background:linear-gradient(#0004, #0004),var(--gray800);
+	width: 100%;
+	height: var(--sz256);
+	& > .snippet-preview_header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: var(--sz8) var(--sz12);
+		& > .snippet-preview_name {
+			font-size: var(--fs14);
+			font-family: 'CascadiaMono', monospace;
+			color: var(--gray100);
+			user-select: none;
+		}
+		& > .snippet-preview_actions {
+			display: flex;
+			gap: var(--sz12);
+			& > .snippet-preview_action {
+				width: var(--sz24);
+				aspect-ratio: 1;
+				cursor: pointer;
+				color: var(--primary200);
+				position: relative;
+				&:hover {
+					color: var(--primary100);
+					&.dangerous-action {
+						color: var(--red300);
+					}
+				}
+			}
+		}
+	}
+}
