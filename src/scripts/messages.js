@@ -4,6 +4,11 @@ export const messages = {
     message: 'The snippet was copied to your clipboard',
     type: 'success'
   },
+  snippetSaved: {
+    title: 'Snippet saved',
+    message: 'The snippet was saved successfully',
+    type: 'success'
+  },
   canNotCopyToClipboard: {
     title: 'Can\'t copy to clipboard',
     message: 'Verify that your browser has access to the clipboard',
@@ -14,9 +19,14 @@ export const messages = {
     message: 'Use a different file format',
     type: 'warning'
   },
-  emptySnippet: {
-    title: 'Empty snippet',
-    message: 'Add some code to your snippet',
+  snippetDeleted: {
+    title: 'Snippet deleted',
+    message: 'The snippet was deleted successfully',
+    type: 'warning'
+  },
+  snippetSetAsActive: {
+    title: 'Snippet active',
+    message: 'The snippet is now active',
     type: 'info'
   },
   error: {
