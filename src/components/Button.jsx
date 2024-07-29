@@ -1,13 +1,12 @@
 import './Button.css'
-import { NoSymbolIcon } from '@heroicons/react/24/outline'
 
-function Button ({ text, Icon = NoSymbolIcon, onClick, className }) {
+function Button ({ text, Icon, onClick, className }) {
   return (
     <button
       className={`button ${className || ''}`}
       onClick={onClick}
     >
-      <Icon className='button_icon' />
+      {Icon && <Icon className='button_icon' />}
       <span className='button_text'>{text}</span>
     </button>
   )
