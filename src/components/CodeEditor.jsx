@@ -1,31 +1,34 @@
 import './CodeEditor.css'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 export function CodeEditor ({
   name,
   placeholder = '',
   onChange = () => {},
-  value,
+  data,
   editable,
-  initialValue
+  sizeFont = 16
 }) {
+  const editor = useRef(null)
   useEffect(() => {
     if (editable) onChange('')
   }, [])
+  useEffect(() => {
+    editor.current.value = data
+  }, [data])
   return (
     <div className='code-editor-container'>
-      <label className='code-editor_label'>{name}</label>
+      {name && <label className='code-editor_label'>{name}</label>}
       <textarea
-        className='code-editor'
+        ref={editor}
+        className='code-editor '
         name={name}
         placeholder={placeholder}
         spellCheck='false'
         disabled={!editable}
-        value={value}
-        defaultValue={initialValue}
-        style={!editable ? { color: 'var(--gray300)' } : {}}
+        style={{ fontSize: `${sizeFont}px` }}
         onKeyDown={e => {
-          if (e.key === 'Tab') {
+          if (e.key === 'Tab' && !e.shiftKey) {
             e.preventDefault()
             const start = e.target.selectionStart
             const end = e.target.selectionEnd
