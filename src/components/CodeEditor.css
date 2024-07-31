@@ -4,6 +4,7 @@
 	border-radius: var(--sz4);
 	background:linear-gradient(#0004, #0004),var(--gray800);
 	flex-grow: 1;
+	position: relative;
 }
 .code-editor_label {
 	padding: var(--sz8) var(--sz12);
@@ -26,5 +27,35 @@
 	white-space: pre;
 	&::placeholder {
 		color: var(--gray600);
+	}
+}
+
+.code-editor-suggestions {
+	position: absolute;
+	left: var(--sz12);
+	bottom: var(--sz12);
+	& > .code-editor-suggestions_icon {
+		width: var(--sz32);
+		aspect-ratio: 1;
+		background-color: #0004;
+		padding: var(--sz4);
+		border-radius: var(--sz4);
+		cursor: pointer;
+	}
+	& > .code-editor-suggestions_lines {
+		position: absolute;
+		bottom: calc(100% + var(--sz8));
+		padding: var(--sz8);
+		background-color: #0004;
+		border-radius: var(--sz4);
+		display: none;
+		& > .code-editor-suggestions_line {
+			white-space: pre;
+			font-size: var(--fs12);
+			color: var(--gray300);
+		}
+	}
+	&:hover > .code-editor-suggestions_lines {
+		display: block;
 	}
 }
