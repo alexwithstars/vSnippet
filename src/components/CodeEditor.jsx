@@ -60,8 +60,8 @@ export function CodeEditor ({
     editor.current.value = data
   }, [data])
   return (
-    <div className='code-editor-container'>
-      {name && <label className='code-editor_label'>{name}</label>}
+    <label className='code-editor-container'>
+      {name && <span className='code-editor_label'>{name}</span>}
       <textarea
         ref={editor}
         className='code-editor'
@@ -85,6 +85,6 @@ export function CodeEditor ({
           </div>
         </div>
       )}
-    </div>
+    </label>
   )
 }
