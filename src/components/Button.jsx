@@ -7,7 +7,7 @@ function Button ({ text, Icon, onClick, className }) {
       onClick={onClick}
     >
       {Icon && <Icon className='button_icon' />}
-      <span className='button_text'>{text}</span>
+      {text && <span className='button_text'>{text}</span>}
     </button>
   )
 }
