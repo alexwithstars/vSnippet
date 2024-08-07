@@ -1,7 +1,10 @@
 import './App.css'
 
+// libs
 import { useEffect, useState } from 'react'
 import { Bars3Icon, ClipboardDocumentIcon, BookmarkIcon } from '@heroicons/react/24/outline'
+
+// custom hooks
 import { useSnippet } from './hooks/useSnippet'
 import { useToast } from './hooks/useToast'
 import { useStorage } from './hooks/useStorage'
@@ -18,6 +21,11 @@ import { messages } from './scripts/messages'
 import { settingsFields, defaultSettings } from './scripts/settings'
 
 export default function App () {
+  const inputs = {
+    name: 'My snippet',
+    prefix: 'snippet',
+    description: 'This is my snippet'
+  }
   const defaultFields = {
     id: 0,
     name: '',
@@ -25,28 +33,35 @@ export default function App () {
     description: '',
     code: ''
   }
+
+  // functions
+  const copyToClipboard = (text) => {
+    window.navigator.clipboard.writeText(text)
+      .then(() => addToast(messages.copiedToClipboard))
+      .catch(() => addToast(messages.canNotCopyToClipboard))
+  }
+
+  // states
+  const [showSideMenu, setShowSideMenu] = useState(false)
   const [fields, setFields] = useState(() => {
     const sessionData = window.sessionStorage.getItem('sessionData')
     try {
       return sessionData ? JSON.parse(sessionData) : defaultFields
     } catch (error) { return defaultFields }
   })
-  const { toasts, addToast, removeToast } = useToast()
   const [settings, setSettings] = useState(() => {
     const setting = window.localStorage.getItem('settings')
     try {
       return setting ? JSON.parse(setting) : defaultSettings
     } catch (error) { return defaultSettings }
   })
-  const { snippets, addSnippet, removeSnippet } = useStorage()
-  const [showSideMenu, setShowSideMenu] = useState(false)
-  const snippet = useSnippet({ ...fields, tabSize: settings.tabs ? 4 : 2 })
-  const inputs = {
-    name: 'My snippet',
-    prefix: 'snippet',
-    description: 'This is my snippet'
-  }
 
+  // hooks
+  const { toasts, addToast, removeToast } = useToast()
+  const { snippets, addSnippet, removeSnippet } = useStorage()
+  const snippet = useSnippet({ ...fields, tabSize: settings.tabs ? 4 : 2 })
+
+  // effects
   useEffect(() => {
     window.sessionStorage.setItem('sessionData', JSON.stringify(fields))
   }, [fields])
@@ -108,11 +123,7 @@ export default function App () {
         <PrimaryButton
           text='Copy'
           Icon={ClipboardDocumentIcon}
-          onClick={() => {
-            window.navigator.clipboard.writeText(snippet)
-              .then(() => addToast(messages.copiedToClipboard))
-              .catch(() => addToast(messages.canNotCopyToClipboard))
-          }}
+          onClick={() => copyToClipboard(snippet)}
         />
       </div>
       {showSideMenu &&
@@ -141,11 +152,7 @@ export default function App () {
             addSnippet(fields)
             addToast(messages.snippetSaved)
           }}
-          onCopySnippet={(snippet) => {
-            window.navigator.clipboard.writeText(snippet)
-              .then(() => addToast(messages.copiedToClipboard))
-              .catch(() => addToast(messages.canNotCopyToClipboard))
-          }}
+          onCopySnippet={(snippet) => copyToClipboard(snippet)}
         />}
       <ToastList removeToast={removeToast} toasts={toasts} />
     </>
