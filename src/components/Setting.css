@@ -9,10 +9,12 @@
 		flex-direction: column;
 		min-width: var(--sz64);
 		gap: var(--sz4);
+		height: 100%;
 		& > .setting_name {
 			font-size: var(--fs16);
 			color: var(--gray100);
 			font-weight: bold;
+			text-transform: capitalize;
 		}
 		& > .setting_description {
 			font-size: var(--fs14);
