@@ -1,21 +1,16 @@
 import './Setting.css'
-import { useEffect, useState } from 'react'
 
-function Setting ({ name, defaultValue, description, onChange = () => {}, type }) {
-  const [value, setValue] = useState(defaultValue)
-  useEffect(() => {
-    onChange(value)
-  }, [value])
+function Setting ({ title, value, description, onChange = () => {}, type }) {
   return (
     <label className='setting'>
       <div className='setting_label'>
-        <span className='setting_name'>{name}</span>
+        <span className='setting_name'>{title}</span>
         <span className='setting_description'>{description}</span>
       </div>
       {type === 'toggle' && (
         <div
           className={`toggle-setting_container ${value ? 'active' : ''}`}
-          onClick={() => setValue(prev => !prev)}
+          onClick={() => onChange(!value)}
         >
           <div className='toggle-setting_indicator' />
         </div>
@@ -26,7 +21,7 @@ function Setting ({ name, defaultValue, description, onChange = () => {}, type }
             type='number'
             className='number-setting_input'
             value={value}
-            onChange={(e) => setValue(e.target.value)}
+            onChange={(e) => onChange(e.target.value)}
           />
           <span className='number-setting_unit'>px</span>
         </div>
@@ -35,25 +30,32 @@ function Setting ({ name, defaultValue, description, onChange = () => {}, type }
   )
 }
 
-export function ToggleSetting ({ name, defaultValue, description, onChange }) {
+export function ToggleSetting ({ title, value, description, onChange }) {
   return (
     <Setting
-      name={name}
+      title={title}
       description={description}
-      defaultValue={defaultValue}
+      value={value}
       onChange={onChange}
       type='toggle'
     />
   )
 }
 
-export function NumberSetting ({ name, defaultValue, description, onChange }) {
+export function NumberSetting ({ title, value, description, onChange }) {
+  const tryParse = (value) => {
+    const num = Number(value)
+    if (Number.isNaN(num)) {
+      return 0
+    }
+    return num
+  }
   return (
     <Setting
-      name={name}
+      title={title}
       description={description}
-      defaultValue={defaultValue}
-      onChange={onChange}
+      value={value}
+      onChange={newValue => onChange(tryParse(newValue))}
       type='number'
     />
   )

@@ -9,7 +9,6 @@ export function SideMenu ({
   settings,
   snippets,
   onClose = () => {},
-  onChangeSettings = () => {},
   onRemoveSnippet = () => {},
   onSetSnippet = () => {},
   onCopySnippet = () => {},
@@ -43,24 +42,15 @@ export function SideMenu ({
         <section className='side-menu_content'>
           <h3>Settings</h3>
           <div className='side-menu_settings'>
-            <ToggleSetting
-              name='Preview'
-              description='Show or hide the snippet preview'
-              defaultValue={settings.preview}
-              onChange={value => onChangeSettings(prev => ({ ...prev, preview: value }))}
-            />
-            <ToggleSetting
-              name='4 spaces tab size'
-              description='Set the tab size to 4 spaces instead of 2'
-              defaultValue={settings.tabs}
-              onChange={value => onChangeSettings(prev => ({ ...prev, tabs: value }))}
-            />
-            <NumberSetting
-              name='Font size'
-              description='Set the code font size'
-              defaultValue={settings.fontSize}
-              onChange={value => onChangeSettings(prev => ({ ...prev, fontSize: value }))}
-            />
+            {settings.map(setting => {
+              if (setting.type === 'toggle') {
+                return <ToggleSetting key={setting.name} {...setting} />
+              }
+              if (setting.type === 'number') {
+                return <NumberSetting key={setting.name} {...setting} />
+              }
+              return null
+            })}
           </div>
           <h3>Snippets</h3>
           <div className='side-menu_snippets'>

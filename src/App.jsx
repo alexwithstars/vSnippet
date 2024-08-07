@@ -5,12 +5,17 @@ import { Bars3Icon, ClipboardDocumentIcon, BookmarkIcon } from '@heroicons/react
 import { useSnippet } from './hooks/useSnippet'
 import { useToast } from './hooks/useToast'
 import { useStorage } from './hooks/useStorage'
+
+// components
+import { PrimaryButton, SecondaryButton } from './components/Button'
 import { ShortInput } from './components/ShortInput'
 import { CodeEditor } from './components/CodeEditor'
 import { ToastList } from './components/ToastList'
-import { PrimaryButton, SecondaryButton } from './components/Button'
-import { messages } from './scripts/messages'
 import { SideMenu } from './components/SideMenu'
+
+// utilities
+import { messages } from './scripts/messages'
+import { settingsFields, defaultSettings } from './scripts/settings'
 
 export default function App () {
   const defaultFields = {
@@ -29,11 +34,6 @@ export default function App () {
   const { toasts, addToast, removeToast } = useToast()
   const [settings, setSettings] = useState(() => {
     const setting = window.localStorage.getItem('settings')
-    const defaultSettings = {
-      preview: true,
-      tabs: false,
-      fontSize: 18
-    }
     try {
       return setting ? JSON.parse(setting) : defaultSettings
     } catch (error) { return defaultSettings }
@@ -117,10 +117,18 @@ export default function App () {
       </div>
       {showSideMenu &&
         <SideMenu
-          onClose={() => setShowSideMenu(false)}
-          onChangeSettings={setSettings}
-          settings={settings}
+          settings={settingsFields.map(setting => (
+            {
+              ...setting,
+              value: settings[setting.name] ?? defaultSettings[setting.name],
+              onChange: (newValue) => {
+                setSettings(prev => ({ ...prev, [setting.name]: newValue }))
+              }
+            }
+          )
+          )}
           snippets={snippets}
+          onClose={() => setShowSideMenu(false)}
           onRemoveSnippet={(id) => {
             removeSnippet(id)
             addToast(messages.snippetDeleted)
