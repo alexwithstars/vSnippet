@@ -13,7 +13,7 @@ export const settingsFields = [
   },
   {
     name: 'fontSize',
-    title: 'font fize',
+    title: 'font size',
     description: 'Set the code font size',
     type: 'number'
   }
