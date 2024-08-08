@@ -1,19 +1,12 @@
-import { useState } from 'react'
+import { useContext } from 'react'
+import { ToastContext } from '../contexts/toast'
 
 export function useToast () {
-  const [toasts, setToasts] = useState([])
-  const addToast = ({ title = '', message = '', type = 'info', duration = 5000 }) => {
-    const newToast = {
-      id: `toast_${crypto.randomUUID()}`,
-      title,
-      message,
-      type,
-      duration
-    }
-    setToasts((prev) => [...prev, newToast])
+  const context = useContext(ToastContext)
+
+  if (context === undefined) {
+    throw new Error('useToast must be used within a ToastProvider')
   }
-  const removeToast = (id) => {
-    setToasts((prev) => prev.filter((toast) => toast.id !== id))
-  }
-  return { toasts, addToast, removeToast }
+
+  return context
 }
