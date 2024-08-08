@@ -4,9 +4,10 @@ import { ToggleSetting, NumberSetting } from './Setting'
 import { useRef, useEffect } from 'react'
 import { PreviewSnippet } from './PreviewSnippet'
 import { PrimaryButton } from './Button'
+import { useSettings } from '../hooks/useSettings'
+import { settingsFields } from '../constants/settings'
 
 export function SideMenu ({
-  settings,
   snippets,
   onClose = () => {},
   onRemoveSnippet = () => {},
@@ -28,6 +29,8 @@ export function SideMenu ({
     })
   }
 
+  const { settings, setSetting } = useSettings()
+
   useEffect(() => show(), [])
 
   return (
@@ -42,12 +45,18 @@ export function SideMenu ({
         <section className='side-menu_content'>
           <h3>Settings</h3>
           <div className='side-menu_settings'>
-            {settings.map(setting => {
+            {settingsFields.map(setting => {
+              const props = {
+                title: setting.title,
+                description: setting.description,
+                value: settings[setting.id],
+                onChange: (value) => setSetting(setting.id, value)
+              }
               if (setting.type === 'toggle') {
-                return <ToggleSetting key={setting.name} {...setting} />
+                return <ToggleSetting key={setting.id} {...props} />
               }
               if (setting.type === 'number') {
-                return <NumberSetting key={setting.name} {...setting} />
+                return <NumberSetting key={setting.id} {...props} />
               }
               return null
             })}

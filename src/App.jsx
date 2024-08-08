@@ -8,6 +8,7 @@ import { Bars3Icon, ClipboardDocumentIcon, BookmarkIcon } from '@heroicons/react
 import { useSnippet } from './hooks/useSnippet'
 import { useToast } from './hooks/useToast'
 import { useStorage } from './hooks/useStorage'
+import { useSettings } from './hooks/useSettings'
 
 // components
 import { PrimaryButton, SecondaryButton } from './components/Button'
@@ -17,8 +18,8 @@ import { ToastList } from './components/ToastList'
 import { SideMenu } from './components/SideMenu'
 
 // utilities
-import { messages } from './scripts/messages'
-import { settingsFields, defaultSettings } from './scripts/settings'
+import { messages } from './constants/messages'
+import { SETTINGS } from './constants/settings'
 
 export default function App () {
   const inputs = {
@@ -49,25 +50,17 @@ export default function App () {
       return sessionData ? JSON.parse(sessionData) : defaultFields
     } catch (error) { return defaultFields }
   })
-  const [settings, setSettings] = useState(() => {
-    const setting = window.localStorage.getItem('settings')
-    try {
-      return setting ? JSON.parse(setting) : defaultSettings
-    } catch (error) { return defaultSettings }
-  })
 
   // hooks
-  const { toasts, addToast, removeToast } = useToast()
+  const { toasts, addToast } = useToast()
   const { snippets, addSnippet, removeSnippet } = useStorage()
-  const snippet = useSnippet({ ...fields, tabSize: settings.tabs ? 4 : 2 })
+  const { settings } = useSettings()
+  const snippet = useSnippet({ ...fields, tabSize: settings[SETTINGS.TABS] ? 4 : 2 })
 
   // effects
   useEffect(() => {
     window.sessionStorage.setItem('sessionData', JSON.stringify(fields))
   }, [fields])
-  useEffect(() => {
-    window.localStorage.setItem('settings', JSON.stringify(settings))
-  }, [settings])
 
   return (
     <>
@@ -92,7 +85,7 @@ export default function App () {
             />
           ))}
         </section>
-        <section className='editors' style={{ tabSize: settings.tabs ? 4 : 2 }}>
+        <section className='editors' style={{ tabSize: settings[SETTINGS.TABS] ? 4 : 2 }}>
           <CodeEditor
             editable
             name='code'
@@ -101,13 +94,13 @@ export default function App () {
             onChange={value => {
               setFields((prev) => ({ ...prev, code: value }))
             }}
-            sizeFont={settings.fontSize}
+            sizeFont={settings[SETTINGS.FONT_SIZE]}
           />
           {settings.preview &&
             <CodeEditor
               name='preview'
               data={snippet}
-              sizeFont={settings.fontSize}
+              sizeFont={settings[SETTINGS.FONT_SIZE]}
             />}
         </section>
       </main>
@@ -128,16 +121,6 @@ export default function App () {
       </div>
       {showSideMenu &&
         <SideMenu
-          settings={settingsFields.map(setting => (
-            {
-              ...setting,
-              value: settings[setting.name] ?? defaultSettings[setting.name],
-              onChange: (newValue) => {
-                setSettings(prev => ({ ...prev, [setting.name]: newValue }))
-              }
-            }
-          )
-          )}
           snippets={snippets}
           onClose={() => setShowSideMenu(false)}
           onRemoveSnippet={(id) => {
@@ -154,7 +137,7 @@ export default function App () {
           }}
           onCopySnippet={(snippet) => copyToClipboard(snippet)}
         />}
-      <ToastList removeToast={removeToast} toasts={toasts} />
+      <ToastList toasts={toasts} />
     </>
   )
 }

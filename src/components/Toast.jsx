@@ -1,5 +1,6 @@
 import './Toast.css'
 import { useEffect, useRef } from 'react'
+import { useToast } from '../hooks/useToast'
 import {
   ExclamationCircleIcon,
   ExclamationTriangleIcon,
@@ -8,11 +9,12 @@ import {
   XMarkIcon
 } from '@heroicons/react/24/outline'
 
-export function Toast ({ id, title, message, type = 'info', duration, removeToast }) {
+export function Toast ({ id, title, message, type = 'info', duration }) {
   const toast = useRef(null)
   const timer = useRef(null)
   const started = useRef(performance.now())
   const remaining = useRef(duration)
+  const { removeToast } = useToast()
   const fadeOut = () => {
     toast.current.style.setProperty('--height', toast.current.offsetHeight + 'px')
     toast.current.classList.add('toast_fadeOut')

@@ -1,7 +1,7 @@
 import './ToastList.css'
 import { Toast } from './Toast'
 
-export function ToastList ({ toasts, removeToast }) {
+export function ToastList ({ toasts }) {
   return (
     <section className='toast-list'>
       {toasts.map((toast) => (
@@ -12,7 +12,6 @@ export function ToastList ({ toasts, removeToast }) {
           message={toast.message}
           type={toast.type}
           duration={toast.duration}
-          removeToast={removeToast}
         />
       ))}
     </section>
