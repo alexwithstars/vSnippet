@@ -7,7 +7,7 @@ import { Bars3Icon, ClipboardDocumentIcon, BookmarkIcon } from '@heroicons/react
 // custom hooks
 import { useSnippet } from './hooks/useSnippet'
 import { useToast } from './hooks/useToast'
-import { useStorage } from './hooks/useStorage'
+import { useSnippetStorage } from './hooks/useSnippetStorage'
 import { useSettings } from './hooks/useSettings'
 
 // components
@@ -53,7 +53,7 @@ export default function App () {
 
   // hooks
   const { toasts, addToast } = useToast()
-  const { snippets, addSnippet, removeSnippet } = useStorage()
+  const { addSnippet } = useSnippetStorage()
   const { settings } = useSettings()
   const snippet = useSnippet({ ...fields, tabSize: settings[SETTINGS.TABS] ? 4 : 2 })
 
@@ -121,12 +121,7 @@ export default function App () {
       </div>
       {showSideMenu &&
         <SideMenu
-          snippets={snippets}
           onClose={() => setShowSideMenu(false)}
-          onRemoveSnippet={(id) => {
-            removeSnippet(id)
-            addToast(messages.snippetDeleted)
-          }}
           onSetSnippet={(fields) => {
             setFields(fields)
             addToast(messages.snippetSetAsActive)
@@ -135,7 +130,6 @@ export default function App () {
             addSnippet(fields)
             addToast(messages.snippetSaved)
           }}
-          onCopySnippet={(snippet) => copyToClipboard(snippet)}
         />}
       <ToastList toasts={toasts} />
     </>

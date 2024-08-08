@@ -6,13 +6,11 @@ import { PreviewSnippet } from './PreviewSnippet'
 import { PrimaryButton } from './Button'
 import { useSettings } from '../hooks/useSettings'
 import { settingsFields } from '../constants/settings'
+import { useSnippetStorage } from '../hooks/useSnippetStorage'
 
 export function SideMenu ({
-  snippets,
   onClose = () => {},
-  onRemoveSnippet = () => {},
   onSetSnippet = () => {},
-  onCopySnippet = () => {},
   onFirstSnippet = () => {}
 }) {
   const sideMenu = useRef(null)
@@ -30,6 +28,7 @@ export function SideMenu ({
   }
 
   const { settings, setSetting } = useSettings()
+  const { snippets } = useSnippetStorage()
 
   useEffect(() => show(), [])
 
@@ -67,9 +66,7 @@ export function SideMenu ({
               <PreviewSnippet
                 key={snippet.id}
                 fields={snippet}
-                onDelete={fields => onRemoveSnippet(fields.id)}
                 onSelect={onSetSnippet}
-                onCopy={onCopySnippet}
               />
             ))}
             {snippets.length === 0 && (
