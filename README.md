@@ -48,4 +48,6 @@ You can contribute to this project just by following these steps:
 [![Vercel](https://img.shields.io/badge/Vercel--000000?logo=vercel&logoColor=white&style=for-the-badge)](https://vercel.com/)
 [![Heroicons](https://img.shields.io/badge/Heroicons--8b5cf6?style=for-the-badge&label=🤖%20heroicons)](https://heroicons.com/)
 
+---
+
 > [vSnippet](https://github.com/alexwithstars/vSnippet/) © 2024 by [Alexwithstars](https://github.com/alexwithstars/) is licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
