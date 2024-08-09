@@ -7,12 +7,9 @@ import { PrimaryButton } from './Button'
 import { useSettings } from '../hooks/useSettings'
 import { settingsFields } from '../constants/settings'
 import { useSnippetStorage } from '../hooks/useSnippetStorage'
+import { useFields } from '../hooks/useFields'
 
-export function SideMenu ({
-  onClose = () => {},
-  onSetSnippet = () => {},
-  onFirstSnippet = () => {}
-}) {
+export function SideMenu ({ onClose = () => {} }) {
   const sideMenu = useRef(null)
 
   const show = () => {
@@ -28,7 +25,8 @@ export function SideMenu ({
   }
 
   const { settings, setSetting } = useSettings()
-  const { snippets } = useSnippetStorage()
+  const { snippets, addSnippet } = useSnippetStorage()
+  const { fields } = useFields()
 
   useEffect(() => show(), [])
 
@@ -66,7 +64,6 @@ export function SideMenu ({
               <PreviewSnippet
                 key={snippet.id}
                 fields={snippet}
-                onSelect={onSetSnippet}
               />
             ))}
             {snippets.length === 0 && (
@@ -74,7 +71,7 @@ export function SideMenu ({
                 <p className='side-menu_noSnippets_text'>There's no snippets yet</p>
                 <PrimaryButton
                   text='Add the current snippet!'
-                  onClick={onFirstSnippet}
+                  onClick={() => addSnippet(fields)}
                   Icon={PlusCircleIcon}
                 />
               </div>

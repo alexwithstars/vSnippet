@@ -11,14 +11,13 @@ import { useSnippetStorage } from '../hooks/useSnippetStorage'
 import { useToast } from '../hooks/useToast'
 import { useSettings } from '../hooks/useSettings'
 import { SETTINGS } from '../constants/settings'
+import { useFields } from '../hooks/useFields'
 
-export function PreviewSnippet ({
-  fields,
-  onSelect = () => {}
-}) {
+export function PreviewSnippet ({ fields }) {
   const { settings } = useSettings()
   const snippet = useSnippet({ ...fields, tabSize: settings[SETTINGS.TABS] ? 4 : 2 })
   const { removeSnippet } = useSnippetStorage()
+  const { setFields } = useFields()
   const { addToast } = useToast()
   return (
     <div className='snippet-preview'>
@@ -36,7 +35,10 @@ export function PreviewSnippet ({
           />
           <ArrowUpOnSquareStackIcon
             className='snippet-preview_action'
-            onClick={() => onSelect(fields)}
+            onClick={() => {
+              setFields(fields)
+              addToast(messages.snippetSetAsActive)
+            }}
             title='Set as active snippet'
           />
           <TrashIcon

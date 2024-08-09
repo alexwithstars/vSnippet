@@ -4,6 +4,7 @@ import App from './src/App'
 import { ToastProvider } from './src/contexts/toast'
 import { SettingsProvider } from './src/contexts/settings'
 import { SnippetStorageProvider } from './src/contexts/snippetStorage'
+import { FieldsProvider } from './src/contexts/fields'
 
 if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
   navigator.serviceWorker.register('/sw.js')
@@ -19,7 +20,9 @@ root.render(
   <SnippetStorageProvider>
     <SettingsProvider>
       <ToastProvider>
-        <App />
+        <FieldsProvider>
+          <App />
+        </FieldsProvider>
       </ToastProvider>
     </SettingsProvider>
   </SnippetStorageProvider>
