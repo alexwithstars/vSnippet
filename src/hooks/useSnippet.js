@@ -1,5 +1,10 @@
 import { useState, useEffect } from 'react'
 
+const specialCharacters = /["'\\]/g
+const htmlg = />/g
+const htmll = /</g
+const toSnippet = /^.*$/gm
+
 export function useSnippet ({
   name = '',
   prefix = '',
@@ -8,10 +13,6 @@ export function useSnippet ({
   tabSize = 2
 }) {
   const [snippet, setSnippet] = useState('')
-  const specialCharacters = /["'\\]/g
-  const htmlg = />/g
-  const htmll = /</g
-  const toSnippet = /^.*$/gm
   const tabs = new RegExp(`\t| {${tabSize}}`, 'g')
   const getSnippet = () => {
     const formatedCode = (code || '')
@@ -27,6 +28,6 @@ export function useSnippet ({
   }
   useEffect(() => {
     setSnippet(getSnippet())
-  }, [name, prefix, description, code])
+  }, [name, prefix, description, code, tabSize])
   return snippet
 }
