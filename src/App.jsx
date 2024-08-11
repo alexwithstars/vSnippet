@@ -1,8 +1,9 @@
 import './App.css'
 
 // libs
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Bars3Icon, ClipboardDocumentIcon, BookmarkIcon } from '@heroicons/react/24/outline'
+import { fileTypeFromBlob } from 'file-type'
 
 // custom hooks
 import { useSnippet } from './hooks/useSnippet'
@@ -21,6 +22,7 @@ import { SideMenu } from './components/SideMenu'
 // utilities
 import { messages } from './constants/messages'
 import { SETTINGS } from './constants/settings'
+import { DropModal } from './components/DropModal'
 
 // constants
 const inputs = [
@@ -36,9 +38,32 @@ export default function App () {
       .then(() => addToast(messages.copiedToClipboard))
       .catch(() => addToast(messages.canNotCopyToClipboard))
   }
+  const handleDrop = async (event) => {
+    event.preventDefault()
+    setShowDropModal(false)
+    if (event.dataTransfer.files.length <= 0) return
+    const file = event.dataTransfer.files[0]
+    const type = await fileTypeFromBlob(file)
+    if (type) {
+      addToast(messages.fileNotSuported)
+      return
+    }
+    const reader = new window.FileReader()
+    reader.onload = (event) => {
+      setFields({ ...fields, code: event.target.result })
+    }
+    reader.onerror = () => {
+      addToast(messages.fileNotSuported)
+    }
+    reader.readAsText(file)
+  }
+  const handleDragLeave = (event) => {
+    setShowDropModal(false)
+  }
 
   // states
   const [showSideMenu, setShowSideMenu] = useState(false)
+  const [showDropModal, setShowDropModal] = useState(false)
 
   // hooks
   const { toasts, addToast } = useToast()
@@ -47,6 +72,16 @@ export default function App () {
   const { fields, setFields } = useFields()
   const snippet = useSnippet({ ...fields, tabSize: settings[SETTINGS.TABS] ? 4 : 2 })
 
+  // effects
+  useEffect(() => {
+    const handleDragEnter = (event) => {
+      setShowDropModal(true)
+    }
+    document.documentElement.addEventListener('dragenter', handleDragEnter)
+    return () => {
+      document.documentElement.removeEventListener('dragenter', handleDragEnter)
+    }
+  }, [])
   return (
     <>
       <header className='header'>
@@ -109,6 +144,7 @@ export default function App () {
           onClose={() => setShowSideMenu(false)}
         />}
       <ToastList toasts={toasts} />
+      {showDropModal && <DropModal onDrop={handleDrop} onDragLeave={handleDragLeave} />}
     </>
   )
 }
