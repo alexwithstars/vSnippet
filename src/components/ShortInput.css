@@ -4,6 +4,7 @@
 	gap: var(--sz4);
 	flex-grow: 1;
 	min-width: var(--sz256);
+	position: relative;
 	& > .short-input_name {
 		font-size: var(--fs18);
 		color: var(--gray300);
@@ -20,8 +21,13 @@
 		width: 100%;
 		font-family: 'Inter', sans-serif;
 		box-shadow: inset var(--shadow1);
+		outline: 2px solid transparent;
+		transition: outline-color 0.2s;
 		&::placeholder {
 			color: var(--gray600);
+		}
+		&:focus{
+			outline-color: var(--primary500);
 		}
 	}
 }
