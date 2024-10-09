@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react'
 
-const specialCharacters = /["'\\]/g
-const htmlg = />/g
-const htmll = /</g
+const specialCharacters = /["\\]/g
 const toSnippet = /^.*$/gm
 
 export function useSnippet ({
@@ -17,8 +15,6 @@ export function useSnippet ({
   const getSnippet = () => {
     const formatedCode = (code || '')
       .replace(specialCharacters, match => `\\${match}`)
-      .replace(htmlg, '&gt;')
-      .replace(htmll, '&lt;')
       .replace(tabs, '\\t')
       .replace(toSnippet, match => `\t\t"${match}",`)
       .slice(0, -1)
