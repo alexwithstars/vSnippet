@@ -1,0 +1,138 @@
+.delete-modal-backdrop {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100dvh;
+	background-color: #aaa1;
+	backdrop-filter: blur(2px);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: var(--sz32);
+	z-index: 1;
+}
+
+.delete-modal {
+	display: flex;
+	flex-direction: column;
+	border-radius: var(--sz4);
+	background-color: var(--gray900);
+	box-shadow: var(--shadow5);
+	padding: var(--sz24);
+	gap: var(--sz24);
+	& > .delete-modal-content {
+		display: flex;
+		gap: var(--sz16);
+		& > .delete-modal-icon {
+			--size: var(--sz48);
+			height: var(--size);
+			width: var(--size);
+			color: var(--red500);
+		}
+		& > .delete-modal-info {
+			display: flex;
+			flex-direction: column;
+			gap: var(--sz4);
+			& > .delete-modal-title {
+				font-size: var(--fs18);
+				font-weight: bold;
+				color: var(--red400);
+			}
+			& > .delete-modal-text {
+				font-size: var(--fs16);
+				color: var(--gray400);
+			}
+		}
+	}
+	& > .delete-modal-actions {
+		display: flex;
+		justify-content: end;
+		gap: var(--sz16);
+		& > button {
+			border: none;
+			outline: none;
+			border-radius: var(--sz4);
+			padding: var(--sz8) var(--sz16);
+			font-size: var(--fs16);
+			cursor: pointer;
+			transition: background-color 0.1s, color 0.1s;
+		}
+		& > .cancel-button {
+			background-color: var(--gray700);
+			color: var(--gray200);
+			&:hover {
+				background-color: var(--gray600);
+				color: var(--gray900);
+			}
+		}
+		& > .delete-button {
+			background-color: var(--red500);
+			color: var(--red100);
+			&:hover {
+				background-color: var(--red400);
+				color: var(--red700);
+			}
+		}
+	}
+}
+
+.delete-modal_fadeIn {
+	animation: deleteModalShow 0.3s forwards;
+	& > .delete-modal {
+		animation: deleteModalFadeIn 0.3s forwards;
+	}
+}
+.delete-modal_fadeOut {
+	animation: deleteModalHide 0.3s forwards;
+	& > .delete-modal {
+		animation: deleteModalFadeOut 0.3s forwards;
+	}
+}
+
+@keyframes deleteModalShow {
+	0% {
+		opacity: 0;
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+@keyframes deleteModalHide {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+@keyframes deleteModalFadeIn {
+	0% {
+		scale: 0.9;
+	}
+	50% {
+		scale: 1.1;
+	}
+	100% {
+		scale: 1;
+	}
+}
+
+@keyframes deleteModalFadeOut {
+	0% {
+		scale: 1;
+	}
+	50% {
+		scale: 1.1;
+	}
+	100% {
+		scale: 0.9;
+	}
+}
