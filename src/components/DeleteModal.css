@@ -4,7 +4,7 @@
 	left: 0;
 	width: 100vw;
 	height: 100dvh;
-	background-color: #aaa1;
+	background-color: #0001;
 	backdrop-filter: blur(2px);
 	display: flex;
 	justify-content: center;
@@ -21,6 +21,7 @@
 	box-shadow: var(--shadow5);
 	padding: var(--sz24);
 	gap: var(--sz24);
+	border: 2px solid var(--red500);
 	& > .delete-modal-content {
 		display: flex;
 		gap: var(--sz16);
