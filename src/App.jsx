@@ -1,7 +1,7 @@
 import './App.css'
 
 // libs
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { Bars3Icon, ClipboardDocumentIcon, BookmarkIcon } from '@heroicons/react/24/outline'
 import { fileTypeFromBlob } from 'file-type'
 
@@ -30,6 +30,8 @@ const inputs = [
   { label: 'prefix', placeholder: 'snippet' },
   { label: 'description', placeholder: 'This is my snippet' }
 ]
+
+const serviceWorkerAvailable = 'serviceWorker' in navigator && process.env.NODE_ENV === 'production'
 
 export default function App () {
   // functions
@@ -65,6 +67,9 @@ export default function App () {
   const [showSideMenu, setShowSideMenu] = useState(false)
   const [showDropModal, setShowDropModal] = useState(false)
 
+  // refs
+  const alreadyCacheUpdated = useRef(false)
+
   // hooks
   const { toasts, addToast } = useToast()
   const { addSnippet } = useSnippetStorage()
@@ -80,6 +85,22 @@ export default function App () {
     document.documentElement.addEventListener('dragenter', handleDragEnter)
     return () => {
       document.documentElement.removeEventListener('dragenter', handleDragEnter)
+    }
+  }, [])
+  useEffect(() => {
+    const showNotification = (event) => {
+      if (event.data.type === 'CACHE_UPDATE' && !alreadyCacheUpdated.current) {
+        alreadyCacheUpdated.current = true
+        addToast(messages.cacheUpdated)
+      }
+    }
+    if (serviceWorkerAvailable) {
+      navigator.serviceWorker.addEventListener('message', showNotification)
+    }
+    return () => {
+      if (serviceWorkerAvailable) {
+        navigator.serviceWorker.removeEventListener('message', showNotification)
+      }
     }
   }, [])
   return (

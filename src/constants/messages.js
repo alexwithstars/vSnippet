@@ -38,5 +38,10 @@ export const messages = {
     title: 'Still in development',
     message: 'Sorry, this feature is still in development, stay tuned!',
     type: 'info'
+  },
+  cacheUpdated: {
+    title: 'Resources updated',
+    message: 'A new version of the page is available, reload to update',
+    type: 'info'
   }
 }
