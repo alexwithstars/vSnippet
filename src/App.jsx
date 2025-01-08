@@ -75,7 +75,7 @@ export default function App () {
   const { addSnippet } = useSnippetStorage()
   const { settings } = useSettings()
   const { fields, setFields } = useFields()
-  const snippet = useSnippet({ ...fields, tabSize: settings[SETTINGS.TABS] ? 4 : 2 })
+  const snippet = useSnippet({ ...fields, tabSize: settings[SETTINGS.TABS] ? 4 : 2, initialTab: settings[SETTINGS.INITIAL_TAB] })
 
   // effects
   useEffect(() => {

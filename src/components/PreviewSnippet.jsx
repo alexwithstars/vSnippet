@@ -17,7 +17,7 @@ import { DeleteModal } from './DeleteModal'
 
 export function PreviewSnippet ({ fields }) {
   const { settings } = useSettings()
-  const snippet = useSnippet({ ...fields, tabSize: settings[SETTINGS.TABS] ? 4 : 2 })
+  const snippet = useSnippet({ ...fields, tabSize: settings[SETTINGS.TABS] ? 4 : 2, initialTab: settings[SETTINGS.INITIAL_TAB] })
   const { removeSnippet } = useSnippetStorage()
   const { setFields } = useFields()
   const { addToast } = useToast()
