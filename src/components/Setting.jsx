@@ -8,11 +8,12 @@ function Setting ({ title, value, description, onChange = () => {}, type }) {
         <span className='setting_description'>{description}</span>
       </div>
       {type === 'toggle' && (
-        <div
-          className={`toggle-setting_container ${value ? 'active' : ''}`}
-          onClick={() => onChange(!value)}
-        >
-          <div className='toggle-setting_indicator' />
+        <div className={`toggle-setting_container ${value ? 'active' : ''}`}>
+          <input
+            type='checkbox'
+            className='toggle-setting_indicator'
+            onClick={() => onChange(!value)}
+          />
         </div>
       )}
       {type === 'number' && (
