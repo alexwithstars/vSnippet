@@ -146,5 +146,6 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
+  user-select: none;
   -webkit-tap-highlight-color: transparent;
 }

@@ -1,0 +1,28 @@
+{
+	"name": "vSnippet",
+	"short_name": "vSnippet",
+	"orientation": "natural",
+	"description": "An easy snippet generator for VSCode",
+	"start_url": "/",
+	"display": "standalone",
+	"theme_color": "hsl(218, 17%, 9%)",
+	"background_color": "hsl(218, 17%, 9%)",
+	"icons": [
+		{
+			"src": "/icon.svg",
+			"sizes": "any"
+		}
+	],
+	"screenshots": [
+		{
+			"src": "/deskShoot.png",
+			"sizes": "1920x1080",
+			"form_factor": "wide"
+		},
+		{
+			"src": "/mobileShoot.png",
+			"sizes": "1080x1920",
+			"form_factor": "narrow"
+		}
+	]
+}
